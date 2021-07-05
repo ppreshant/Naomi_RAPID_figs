@@ -35,8 +35,7 @@ time_series_plot <- ggplot(data = long_dat,
   geom_point() +
   geom_line()
 
-time_series_plot
-
+time_series_plot # show plot
 
 timepoints_avg_barplt <- ggplot(data = group_segregated_dat,
                                 mapping = aes(x = Sample_type, y = log_virus_removal)) + 
@@ -44,10 +43,12 @@ timepoints_avg_barplt <- ggplot(data = group_segregated_dat,
            alpha = .4,
            stat = 'identity') + # make barplot for the last timepoint == 90 minutes
   
-  geom_point(mapping = aes(colour = Time), position = 'jitter') + # plot points for all the timepoints
-  scale_color_viridis_b() + # make the colour legend discrete -- work in progress (make each break as the data points)
+  geom_jitter(mapping = aes(colour = Time), height = 0) + # plot points for all the timepoints
+  scale_color_viridis_b(breaks = c(0, 1, 2.5, 10, 30, 60, 90)) + # make the colour legend discrete -- work in progress (make each break as the data points)
   # https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html#details
-
+  
+  guides(colour = guide_legend()) +
+  
   facet_grid(~ lettrcol, space = 'free', scales = 'free')  
 
   # scale_fill_discrete(palette = "Set1") # format colours properly. doesn't work
